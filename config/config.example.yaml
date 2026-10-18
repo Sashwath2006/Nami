@@ -1,6 +1,6 @@
 # Copy to config/config.yaml (git-ignored). NEVER put API keys here; Hermes keeps secrets in its own .env.
-jarvis:
-  hermes_profile: jarvis
+nami:
+  hermes_profile: nami
   privacy:
     allow_cloud: false          # local only: no source/private data leaves this machine
   model:
@@ -19,5 +19,17 @@ jarvis:
       - "*curl*|*sh*"
       - "sudo *"
       - "rm -rf *"
-  projects: []                  # registered via jarvis, e.g. {name, root, test_cmd}
+  routing:
+    allow_cloud: false          # master switch; flip to true only after reading docs/model-routing.md
+    cloud_confirm_internal: true
+    local_profile: nami-local
+    cloud_profile: nami-cloud
+    local_context_limit: 64000  # set to your local model's real window
+    treat_pii_as_sensitive: true
+    aliases:                    # must exist as model_aliases in the matching Hermes profile
+      local_fast: local-fast
+      local_strong: local-strong
+      cloud_fast: cloud-fast
+      cloud_strong: cloud-strong
+  projects: []                  # {name, root, test_cmd, sensitivity: public|internal|sensitive}; default = sensitive
   secret_globs: [".env", ".env.*", "*.pem", "*.key", "id_rsa*", ".aws/*", ".ssh/*"]

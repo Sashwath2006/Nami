@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# JARVIS Phase 0 baseline probe. READ-ONLY: installs nothing, changes nothing.
+# Nami Phase 0 baseline probe. READ-ONLY: installs nothing, changes nothing.
 # Secrets: .env is reported by variable NAME only; config.yaml has secret-looking values redacted.
 # Usage:  bash scripts/phase0_probe.sh        -> writes docs/phase0-baseline-raw.txt
 set +e

@@ -1,4 +1,4 @@
-# JARVIS Phase 0: Baseline Assessment (interim)
+# Nami Phase 0: Baseline Assessment (interim)
 
 Status: **docs-verified, installed-version unverified.** My sandbox is Linux and cannot see your Mac or `~/.hermes`. Run `bash scripts/phase0_probe.sh` and I will confirm every "docs" row below against your installed version.
 
@@ -19,7 +19,7 @@ Status: **docs-verified, installed-version unverified.** My sandbox is Linux and
 | Agent loop, sessions, `--continue` resume | Built-in | `hermes sessions list`, `hermes -c` |
 | Push-to-talk, STT, streaming TTS, barge-in, "stop" phrase | Built-in | `/voice on`, Ctrl+B; local faster-whisper (no key), Edge TTS (no key) |
 | Wake word | Built-in | On-device openWakeWord ("hey hermes" bundled) or sherpa (any typed phrase); off by default; Apple Silicon supported (macOS 15+ for openWakeWord wheel) |
-| Wake word "jarvis" | Configurable | `provider: sherpa`, `phrase: "hey jarvis"` (no key); Porcupine's default keyword is "jarvis" but needs an Picovoice key |
+| Wake word "nami" | Configurable | `provider: sherpa`, `phrase: "hey nami"` (no key); Porcupine's default keyword is "nami" but needs an Picovoice key |
 | Mic mute / visible state | **Gap** | Docs show `/wake off` and a desktop ear toggle; no hardware-mute integration documented |
 | Approvals (smart/manual/off) | Built-in | `approvals.mode`; fail-closed timeout |
 | Hardline blocklist, user deny globs | Built-in / Configurable | `approvals.deny` (e.g. `git push --force*`). Docs state it is a command-pattern policy, not a sandbox |
@@ -44,14 +44,14 @@ Spec items 6, 10 and most of 4 and 9 are already Hermes features, so building th
 
 ```
 Hermes Agent (CLI/TUI, later Desktop)   <- voice, wake word, sessions, approvals, cron, memory
-  profile: jarvis        (config.yaml + SOUL.md persona + approvals.deny + terminal.cwd)
+  profile: nami        (config.yaml + SOUL.md persona + approvals.deny + terminal.cwd)
   skills/ (in repo, linked into Hermes skill path)
-  jarvis/ (small Python package, only real gaps)
+  nami/ (small Python package, only real gaps)
      projects.py   registry (YAML) + secret-path exclusions
      summary.py    progress summary + resume freshness check (git-verified)
      audit.py      redacted JSONL action log, only if Hermes lacks one
   tests/ (unit + security: deny rules, redaction, cross-project isolation)
-Optional later: profile jarvis-sec (isolated creds/permissions) for security audits
+Optional later: profile nami-sec (isolated creds/permissions) for security audits
 ```
 
 Deliberately not built: custom orchestrator, router, session manager, voice stack, permission engine, dashboard.
@@ -59,25 +59,25 @@ Deliberately not built: custom orchestrator, router, session manager, voice stac
 ## 4. Prioritised backlog
 
 1. P0: Run probe; confirm Hermes version, provider, `hermes doctor`, text chat works.
-2. P1: Create `jarvis` profile with SOUL.md, `approvals.mode: manual` (until trust built), `approvals.deny` list, `terminal.cwd`.
+2. P1: Create `nami` profile with SOUL.md, `approvals.mode: manual` (until trust built), `approvals.deny` list, `terminal.cwd`.
 3. P1: Repo scaffold (git init, `.gitignore` excluding `.env`/secrets, README, config.example).
 4. P1: `project-recon` skill + project registry; run on a throwaway test repo.
 5. P2: `git-workflow`, `feature-implementation`, `debugging`, `code-review` skills.
 6. P2: `session-resume` skill + summary generator with freshness check.
 7. P2: Voice push-to-talk via `/voice on`; measure latency/CPU.
-8. P3: Wake word (sherpa "hey jarvis"), false-trigger tuning, mute procedure.
+8. P3: Wake word (sherpa "hey nami"), false-trigger tuning, mute procedure.
 9. P3: Docker terminal backend for security-audit profile.
 10. P4: security-audit, technical-research, report-generation skills; cron workflows.
 11. P4: Integrations (Spotify, browser) and dashboard decision.
 
 ## 5. Milestone 1: "Verified baseline + first safe vertical slice"
 
-Objective: JARVIS profile answers by text, registers one throwaway repo, runs project-recon, and a blocked command stays blocked.
+Objective: Nami profile answers by text, registers one throwaway repo, runs project-recon, and a blocked command stays blocked.
 
 Acceptance tests:
 
 1. `hermes --version` and `hermes doctor` pass; one plain chat turn succeeds on the configured provider.
-2. `hermes -p jarvis` starts with its own config and memory (verify via `hermes profile show jarvis`).
+2. `hermes -p nami` starts with its own config and memory (verify via `hermes profile show nami`).
 3. `approvals.deny` blocks `git push --force origin main` in a live session (command not executed; BLOCKED shown).
 4. Reading a project `.env` is refused by the file tool.
 5. `project-recon` on a test repo produces a summary whose language, test command and git status match manual inspection.
@@ -88,7 +88,7 @@ Acceptance tests:
 
 1. **Provider/privacy:** which provider(s) may see your source code (Nous Portal, Anthropic, OpenRouter, local Ollama only)? Default stance: nothing leaves the machine until you name one.
 2. **Install shape:** Hermes Desktop app, CLI install, or both? Affects where skills load and how wake word runs.
-3. **Wake phrase and engine:** "hey jarvis" via sherpa (free, keyless, my recommendation) vs "hey hermes" via openWakeWord (bundled model).
+3. **Wake phrase and engine:** "hey nami" via sherpa (free, keyless, my recommendation) vs "hey hermes" via openWakeWord (bundled model).
 4. **Isolation level for coding:** local backend with approvals and deny rules (fast to start, no true sandbox) vs Docker backend from day one (stronger, more setup and slower on a MacBook Air).
 5. **Test repo:** point me at a small throwaway repo, or let me create one in `Nami/sandbox-repo`.
 6. **Approval to proceed:** OK to `git init` this folder and scaffold the repo structure above?

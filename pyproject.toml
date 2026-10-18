@@ -1,5 +1,5 @@
 [project]
-name = "jarvis"
+name = "nami"
 version = "0.0.1"
 description = "Personal AI workspace layer on top of Hermes Agent"
 requires-python = ">=3.10"

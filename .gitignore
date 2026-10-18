@@ -7,7 +7,7 @@ config/*.local.yaml
 *.pem
 *.key
 # runtime state
-.jarvis/
+.nami/
 *.log
 *.sqlite
 *.db
