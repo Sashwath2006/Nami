@@ -1,0 +1,23 @@
+# secrets / user-specific
+.env
+.env.*
+!.env.example
+config/config.yaml
+config/*.local.yaml
+*.pem
+*.key
+# runtime state
+.jarvis/
+*.log
+*.sqlite
+*.db
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+# raw machine probes may hold private info
+docs/phase0-baseline-raw.txt
+# sandbox test repo is its own git repo
+sandbox-repo/
